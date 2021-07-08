@@ -3,13 +3,13 @@ import { Image, View, ScrollView, KeyboardAvoidingView, Platform } from 'react-n
 import Icon from 'react-native-vector-icons/Feather';
 import { useNavigation } from '@react-navigation/native';
 
-import { Container, Title, ForgotPassword, ForgotPasswordText, CreateAccountButton, CreateAccountButtonText} from './styles';
+import { Container, Title, BackToSignIn, BackToSignInText} from './styles';
 
 import logoimg from '../../essets/logo.png';
 import Input from '../../components/input';
 import Button from '../../components/button';
 
-const SignIn = () => {
+const SignUp = () => {
     const navigation = useNavigation();
 
     return (
@@ -19,23 +19,22 @@ const SignIn = () => {
                 <Container>
                     <Image source={logoimg} />
 
-                    <View><Title>Faça seu Logon</Title></View> 
+                    <View><Title>Crie sua conta</Title></View> 
+                    <Input  name="name" icon="user" placeholder="Nome"/>
                     <Input  name="email" icon="mail" placeholder="E-mail"/>
                     <Input name="password" icon="lock" placeholder="Senha" />
                     <Button onPress={() => {}}>Entrar</Button>
-                    <ForgotPassword onPress={() => {}}>
-                        <ForgotPasswordText>Esqueci minha senha</ForgotPasswordText>
-                    </ForgotPassword>
+                
                 </Container>
                 </ScrollView>
             </KeyboardAvoidingView>
 
-            <CreateAccountButton onPress={() => navigation.navigate('SignUp')}>
-                <Icon name="log-in" size={20} color="#ff9000" />
-                <CreateAccountButtonText>Criar uma conta</CreateAccountButtonText>
-            </CreateAccountButton>
+            <BackToSignIn onPress={() => navigation.goBack()}>
+                <Icon name="arrow-left" size={20} color="#fff" />
+                <BackToSignInText>Voltar para Logon</BackToSignInText>
+            </BackToSignIn>
         </>
     )
 }
 
-export default SignIn;
+export default SignUp;
