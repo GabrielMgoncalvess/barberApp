@@ -9,23 +9,83 @@ import logoimg from '../../essets/logo.png';
 import Input from '../../components/input';
 import Button from '../../components/button';
 
+import { Formik } from 'formik';
+import * as yup from 'yup';
+
+
+import { TextInput } from 'react-native'
+
 const SignIn = () => {
     const navigation = useNavigation();
+
+    const schema = yup.object().shape({
+        email: yup.string().email('Digite um e-mail válido').required('E-mail obrigatório'),
+        password: yup.string().required('Senha obrigatória'),
+    });
+
+    const initialValues = {
+        email: '',
+        password: '',
+    }
+
+    interface submitValues {
+        email: string;
+        password: string
+    }
+
+    function handleSignIn(values:submitValues) {
+        return(console.log(values))
+    }
+  
 
     return (
         <>
             <KeyboardAvoidingView style={{ flex: 1 }}  behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
                 <ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={{ flex:1 }}>
                 <Container>
+
                     <Image source={logoimg} />
 
                     <View><Title>Faça seu Logon</Title></View> 
-                    <Input  name="email" icon="mail" placeholder="E-mail"/>
-                    <Input name="password" icon="lock" placeholder="Senha" />
-                    <Button onPress={() => {}}>Entrar</Button>
+
+                        <Formik
+                            initialValues={initialValues}
+                            onSubmit={handleSignIn}
+                            validationSchema={schema}
+                        >               
+                        {({values, handleChange, handleSubmit}) => (
+                            <>
+                                <Input 
+                                    name="email" icon="mail" 
+                                    placeholder="E-mail" 
+                                    value={values.email} 
+                                    onChangeText={handleChange('email')}
+                                    autoCorrect={false} 
+                                    autoCapitalize="none"
+                                    keyboardType="email-address"
+                                    returnKeyType="next"
+                                />
+
+                                <Input 
+                                    name="password" 
+                                    icon="lock" 
+                                    placeholder="Senha" 
+                                    value={values.password} 
+                                    onChangeText={handleChange('password')} 
+                                    secureTextEntry
+                                    returnKeyType="send"
+                                    onSubmitEditing={handleSubmit}
+                                />
+
+                                <Button title="Entrar" onPress={handleSubmit}/>
+                            </>
+                        )}
+                        </Formik> 
+                    
                     <ForgotPassword onPress={() => {}}>
                         <ForgotPasswordText>Esqueci minha senha</ForgotPasswordText>
                     </ForgotPassword>
+                   
                 </Container>
                 </ScrollView>
             </KeyboardAvoidingView>
