@@ -2,6 +2,7 @@ import React from 'react';
 import { Image, View, ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import { useNavigation } from '@react-navigation/native';
+import { Alert } from 'react-native';
 
 import { Container, Title, ForgotPassword, ForgotPasswordText, CreateAccountButton, CreateAccountButtonText} from './styles';
 
@@ -13,9 +14,7 @@ import { Formik } from 'formik';
 import * as yup from 'yup';
 
 
-import { TextInput } from 'react-native'
-
-const SignIn = () => {
+const SignIn = (props:any) => {
     const navigation = useNavigation();
 
     const schema = yup.object().shape({
@@ -33,8 +32,13 @@ const SignIn = () => {
         password: string
     }
 
-    function handleSignIn(values:submitValues) {
-        return(console.log(values))
+    async function handleSignIn(values:submitValues) {
+        try {
+            return(console.log(values))
+
+        } catch {
+            Alert.alert('erro', 'erro2')
+        }
     }
   
 
